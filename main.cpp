@@ -2,143 +2,137 @@
 #include <string>
 #include <vector>
 #include <time.h>
+#include <map>
 using namespace std;
 
-class Recenzie {
+class Review {
 
 protected:
-    string numeClient;
-    int durataSederii;
-    double nota;
+    string clientName;
+    int timeStayed;
+    double grade;
 public:
-    Recenzie() : Recenzie("", 0, 0) {}
+    Review() : Review("", 0, 0) {}
 
-    Recenzie(const string &numeClient, int durataSederii, double nota) : numeClient(numeClient),
-                                                                         durataSederii(durataSederii), nota(nota) {}
+    Review(const string &numeClient, int durataSederii, double nota) : clientName(numeClient),
+                                                                       timeStayed(durataSederii), grade(nota) {}
 
-    friend ostream &operator<<(ostream &os, const Recenzie &recenzie) {
-        os << "numeClient: " << recenzie.numeClient << " , " << " durataSederii: " << recenzie.durataSederii << " , "
-           << " nota: "
-           << recenzie.nota;
+    friend ostream &operator<<(ostream &os, const Review &recenzie) {
+        os << "clientName: " << recenzie.clientName << " , " << " timeStayed: " << recenzie.timeStayed << " , "
+           << " grade: "
+           << recenzie.grade;
         return os;
     }
 
-    friend istream &operator>>(istream &is, Recenzie &r) {
-        cout << "numeClient: ";
-        is >> r.numeClient;
-        cout << "durataSederii: ";
-        is >> r.durataSederii;
-        cout << "nota: ";
-        is >> r.nota;
+    friend istream &operator>>(istream &is, Review &r) {
+        cout << "clientName: ";
+        is >> r.clientName;
+        cout << "timeStayed: ";
+        is >> r.timeStayed;
+        cout << "grade: ";
+        is >> r.grade;
         return is;
     }
 
-    double getNota() const {
-        return nota;
+    double getGrade() const {
+        return grade;
     }
 
-    void setNumeClient(const string &numeClient) {
-        Recenzie::numeClient = numeClient;
+    void setClientName(const string &numeClient) {
+        Review::clientName = numeClient;
     }
 
-    void setDurataSederii(int durataSederii) {
-        Recenzie::durataSederii = durataSederii;
+    void setTimeStayed(int durataSederii) {
+        Review::timeStayed = durataSederii;
     }
 
-    void setNota(double nota) {
-        Recenzie::nota = nota;
+    void setGrade(double nota) {
+        Review::grade = nota;
     }
 
 };
-void adaugaRecenzii(vector<Recenzie> &recenzii) {
-    cout << " numar recenzii: ";
+void addReviews(vector<Review> &reviews) {
+    cout << " number of reviews: ";
     int in;
     cin >> in;
     for (int i = 0; i < in; i++) {
-        Recenzie recenzie;
-        cin >> recenzie;
-        recenzii.push_back(recenzie);
+        Review tempReview;
+        cin >> tempReview;
+        reviews.push_back(tempReview);
     }
 }
-//void adaugaRecenziiRandom(vector<Recenzie> &recenzii) {
-////    cout << " numar recenzii: ";
+
+/// Here i have tried to play a bit with the random functions and generate my Reviews automatically
+//void adaugaRecenziiRandom(vector<Review> &reviews) {
+////    cout << " numar reviews: ";
 //    int in = rand() % 5+1;
 ////    cin >> in;
-//    Recenzie recenzie;
+//    Review recenzie;
 //    srand(time(NULL));
 //    string v[10]={"Liam", "Olivia", "Noah", "Emma", "Oliver", "Charlotte", "William", "Sophia","James", "Isabella"};
 //    for (int i = 0; i < in; i++) {
-//        recenzie.setNumeClient(v[(int)rand()%9]);
-//        recenzie.setNota(rand()%10+1);
-//        recenzie.setDurataSederii(rand()%7+1);
-//        recenzii.push_back(recenzie);
+//        recenzie.setClientName(v[(int)rand()%9]);
+//        recenzie.setGrade(rand()%10+1);
+//        recenzie.setTimeStayed(rand()%7+1);
+//        reviews.push_back(recenzie);
 //    }
 //}
 
 
 class Destination {
 protected:
-    string tara;
-    string oras;
-    string denumire;
+    string country;
+    string city;
+    string turisticAttraction;
     double price;
-    vector<Recenzie> recenzii;
+    vector<Review> reviews;
 public:
     Destination() {
-        tara = "";
-        oras = "";
-        denumire = "";
+        country = "";
+        city = "";
+        turisticAttraction = "";
         price = 0;
-        recenzii.resize(0);
+        reviews.resize(0);
     }
 
     Destination(const string &tara, const string &oras, const string &denumire, double price,
-                const vector<Recenzie> &recenzii) : tara(tara), oras(oras), denumire(denumire), price(price),
-                                                    recenzii(recenzii) {}
+                const vector<Review> &recenzii) : country(tara), city(oras), turisticAttraction(denumire), price(price),
+                                                  reviews(recenzii) {}
 
-    virtual void afisare() {
+    virtual void print() {
         cout << "[ ";
-        cout << "tara: " << tara << " , " << "oras: " << oras << " , " << "denumire: " << denumire
+        cout << "country: " << country << " , " << "city: " << city << " , " << "turisticAttraction: " << turisticAttraction
              << " , " << "price: " << price << " , ";
-        cout << "recenzii :{";
-        for (auto recenzie: recenzii) {
-            cout << recenzie << " ";
-            recenzii.pop_back();
+        cout << "reviews :{";
+        for (auto tempReview: reviews) {
+            cout << tempReview << " ";
+            reviews.pop_back();
         }
         cout << "}" << " , ";
     }
 
     friend ostream &operator<<(ostream &os, Destination &destination) {
-        destination.afisare();
+        destination.print();
         return os;
     }
 
-//    void adaugaRecenzii() {
-//        cout << " numar recenzii: ";
-//        int in;
-//        cin >> in;
-//        for (int i = 0; i < in; i++) {
-//            Recenzie recenzie;
-//            cin >> recenzie;
-//            recenzii.push_back(recenzie);
-//        }
-//    }
 
-    virtual void citire() {
-        cout << "tara: ";
-        cin >> tara;
-        cout << " oras: ";
-        cin >> oras;
-        cout << " denumire: ";
-        cin >> denumire;
+
+    virtual void input() {
+        cout << "country: ";
+        cin >> country;
+        cout << " city: ";
+        cin >> city;
+        cout << " turisticAttraction: ";
+        cin >> turisticAttraction;
         cout << " price: ";
         cin >> price;
-        adaugaRecenzii(recenzii);
+        addReviews(reviews);
     }
 
 
     friend istream &operator>>(istream &is, Destination &destination) {
-        destination.citire();
+        destination.input();
         return is;
     }
 
@@ -147,41 +141,41 @@ public:
     }
 
     const string &getTara() const {
-        return tara;
+        return country;
     }
 
     const string &getOras() const {
-        return oras;
+        return city;
     }
 
     const string &getDenumire() const {
-        return denumire;
+        return turisticAttraction;
     }
 
-    double media() {
-        double media = 0;
-        double nota;
-        int nr = 0;
-        for (auto recenzie: recenzii) {
-            nr++;
-            nota = recenzie.getNota();
-            media = media + nota;
+    double average() {
+        double average = 0;
+        double grade;
+        int number = 0;
+        for (auto tempReview: reviews) {
+            number++;
+            grade = tempReview.getGrade();
+            average = average + grade;
         }
-        return media / nr;
+        return average / number;
         return 0;
     }
 
-    int nrRecenzii() {
+    int reviewNumber() {
         int nr = 0;
-        for (auto recenzie: recenzii) {
+        for (auto tempReview: reviews) {
             nr++;
         }
         return nr;
         return 0;
     }
 
-    const vector<Recenzie> &getRecenzii() const {
-        return recenzii;
+    const vector<Review> &getRecenzii() const {
+        return reviews;
     }
 
 };
@@ -189,79 +183,79 @@ public:
 
 class MountainTourism : public Destination {
 private:
-    double inaltimeVf;
-    double distantaVf;
-    int nrTrasee;
+    double mountainPeak;
+    double distanceToPeak;
+    int routeNumber;
 public:
 
-    MountainTourism() : Destination(), inaltimeVf(0), distantaVf(0), nrTrasee(0) {};
+    MountainTourism() : Destination(), mountainPeak(0), distanceToPeak(0), routeNumber(0) {};
 
     MountainTourism(const string &tara, const string &oras, const string &denumire, double price,
-                    const vector<Recenzie> &recenzii, double inaltimeVf, double distantaVf, int nrTrasee)
-            : Destination(tara, oras, denumire, price, recenzii), inaltimeVf(inaltimeVf), distantaVf(distantaVf),
-              nrTrasee(nrTrasee) {}
+                    const vector<Review> &recenzii, double inaltimeVf, double distantaVf, int nrTrasee)
+            : Destination(tara, oras, denumire, price, recenzii), mountainPeak(inaltimeVf), distanceToPeak(distantaVf),
+              routeNumber(nrTrasee) {}
 
-    void afisare() override {
-        Destination::afisare();
+    void print() override {
+        Destination::print();
         cout << "{ ";
-        cout << "inaltimeVf: " << inaltimeVf << " , ";
-        cout << "distantaVf: " << distantaVf << " , ";
-        cout << "nrTrasee: " << nrTrasee << " } ]";
+        cout << "mountainPeak: " << mountainPeak << " , ";
+        cout << "distanceToPeak: " << distanceToPeak << " , ";
+        cout << "routeNumber: " << routeNumber << " } ]";
     }
 
-    void citire() override {
-        Destination::citire();
-        cout << "inaltimeVf: ";
-        cin >> inaltimeVf;
-        cout << "distantaVf: ";
-        cin >> distantaVf;
-        cout << "nrTrasee: ";
-        cin >> nrTrasee;
+    void input() override {
+        Destination::input();
+        cout << "mountainPeak: ";
+        cin >> mountainPeak;
+        cout << "distanceToPeak: ";
+        cin >> distanceToPeak;
+        cout << "routeNumber: ";
+        cin >> routeNumber;
     }
 
 };
 
 class IslandTourism : public Destination {
 private:
-    int nrInsule;
-    bool areIesireLaMare;
-    bool areIesireLaOcean;
+    int islandNumber;
+    bool isAtTheSea;
+    bool isAtTheOcean;
 public:
-    IslandTourism() : Destination(), nrInsule(0), areIesireLaMare(0), areIesireLaOcean(0) {};
+    IslandTourism() : Destination(), islandNumber(0), isAtTheSea(0), isAtTheOcean(0) {};
 
     IslandTourism(const string &tara, const string &oras, const string &denumire, double price,
-                  const vector<Recenzie> &recenzii, int nrInsule, bool areIesireLaMare, bool areIesireLaOcean)
-            : Destination(tara, oras, denumire, price, recenzii), nrInsule(nrInsule), areIesireLaMare(areIesireLaMare),
-              areIesireLaOcean(areIesireLaOcean) {}
+                  const vector<Review> &recenzii, int nrInsule, bool areIesireLaMare, bool areIesireLaOcean)
+            : Destination(tara, oras, denumire, price, recenzii), islandNumber(nrInsule), isAtTheSea(areIesireLaMare),
+              isAtTheOcean(areIesireLaOcean) {}
 
-    void afisare() override {
-        Destination::afisare();
+    void print() override {
+        Destination::print();
         cout << "{ ";
-        cout << "nrInsule: " << nrInsule << " , ";
-        cout << "areIesireLaMare: " << areIesireLaMare << " , ";
-        cout << "areIesireLaOcean: " << areIesireLaOcean << " } ]";
+        cout << "islandNumber: " << islandNumber << " , ";
+        cout << "isAtTheSea: " << isAtTheSea << " , ";
+        cout << "isAtTheOcean: " << isAtTheOcean << " } ]";
     }
 
-    void citire() override {
-        Destination::citire();
-        cout << "nrInsule: ";
-        cin >> nrInsule;
-        cout << "areIesireLaMare: ";
-        cin >> areIesireLaMare;
-        cout << "areIesireLaOcean: ";
-        cin >> areIesireLaOcean;
+    void input() override {
+        Destination::input();
+        cout << "islandNumber: ";
+        cin >> islandNumber;
+        cout << "isAtTheSea: ";
+        cin >> isAtTheSea;
+        cout << "isAtTheOcean: ";
+        cin >> isAtTheOcean;
     }
 };
 
 Destination *createDestination() {
-    int tip;
-    cout << "Tip destinatie (0=munte, 1=mare): ";
-    cin >> tip;
+    int type;
+    cout << "Destination type (0=mountain, 1=island): ";
+    cin >> type;
 
     Destination *d = nullptr;
-    if (tip == 0) {
+    if (type == 0) {
         d = new MountainTourism;
-    } else if (tip == 1) {
+    } else if (type == 1) {
         d = new IslandTourism;
     }
 
@@ -284,72 +278,72 @@ Destination *allocate(Destination *d) {
 
 class MountainDiscount {
 private:
-    double valoareRedusa;
+    double reducedValue;
 public:
-    MountainDiscount(double valoareRedusa = 0) : valoareRedusa(valoareRedusa) {}
+    MountainDiscount(double valoareRedusa = 0) : reducedValue(valoareRedusa) {}
 
-    double valoareDupaReducere(Destination &d) {
-        // TODO daca este Mountains, returnezi pretul original
+    double discountedValue(Destination &d) {
+        /// If it is a MountainDestination the function returns the initial price
         if (dynamic_cast<IslandTourism *>(&d)) {
             return d.getPrice();
         }
         double p = d.getPrice();
-        return p - valoareRedusa;
+        return p - reducedValue;
     }
 
     friend istream &operator>>(istream &is, MountainDiscount &discount) {
-        cout << "valoareRedusa: ";
-        is >> discount.valoareRedusa;
+        cout << "reducedValue: ";
+        is >> discount.reducedValue;
         return is;
     }
 };
 
 class IslandDiscount {
 private:
-    double valoareRedusa;
+    double reducedValue;
 public:
-    IslandDiscount(double valoareRedusa = 0) : valoareRedusa(valoareRedusa) {}
+    IslandDiscount(double valoareRedusa = 0) : reducedValue(valoareRedusa) {}
 
-    double valoareDupaReducere(Destination &d) {
-        // TODO daca este Mountains, returnezi pretul original
+    double discountedValue(Destination &d) {
+        ///If it is an IslandDestination the function returns the initial price
         if (dynamic_cast<MountainTourism *>(&d)) {
             return d.getPrice();
         }
         double p = d.getPrice();
-        return p - valoareRedusa;
+        return p - reducedValue;
     }
 
     friend istream &operator>>(istream &is, IslandDiscount &discount) {
-        cout << "valoareRedusa: ";
-        is >> discount.valoareRedusa;
+        cout << "reducedValue: ";
+        is >> discount.reducedValue;
         return is;
     }
 };
 
 class PercentileDiscount {
 private:
-    double procentReducere;
+    double percentileDiscount;
 public:
-    PercentileDiscount(double procentReducere = 0) : procentReducere(procentReducere) {}
+    PercentileDiscount(double procentReducere = 0) : percentileDiscount(procentReducere) {}
 
     friend istream &operator>>(istream &is, PercentileDiscount &discount) {
-        cout << "procentReducere: ";
-        is >> discount.procentReducere;
-        if (discount.procentReducere >= 50) { throw 1; }
+        cout << "percentileDiscount: ";
+        is >> discount.percentileDiscount;
+        if (discount.percentileDiscount >= 50) { throw 1; }
         return is;
     }
 
-    double valoareDupaReducere(Destination &d) {
+    double discountedValue(Destination &d) {
         double p = d.getPrice();
-        return p = p * (100 - procentReducere) / 100;
+        return p = p * (100 - percentileDiscount) / 100;
     }
 
-    double getProcentReducere() const {
-        return procentReducere;
+    double getPercentileDiscount() const {
+        return percentileDiscount;
     }
 };
 
-#include <map>
+
 
 class TravelAgency {
 protected:
@@ -357,13 +351,14 @@ protected:
     MountainDiscount md;
     IslandDiscount id;
     PercentileDiscount pd;
-
-private: // TODO 1
+/// 1. Implementation of a singleton class
+/// The constructor is private
+private:
     TravelAgency(const vector<Destination *> &_destinations, const MountainDiscount &md, const IslandDiscount &id,
                  const PercentileDiscount &pd) : md(md), id(id), pd(pd) {
         for (auto *destination: _destinations) {
             destinations.push_back(allocate(destination));
-            if (pd.getProcentReducere() > 50) { throw 1; }
+            if (pd.getPercentileDiscount() > 50) { throw 1; }
         }
     }
 
@@ -373,11 +368,15 @@ private: // TODO 1
             destinations.push_back(allocate(destination));
         }
     }
-    /// TODO 2   pastram un pointer static, catre TravelAgency, ca sa putem retine o instanta aici
+
+    /// 2. We make a static pointer towards TravelAgency such that we can save an instance over here
+
 public:
     static TravelAgency *app;
 
-    // TODO 4 in functia static, daca app nu exista o cream, altfel returnap app care deja exista
+
+    /// 3. In the static function, if app doesn't exist we create it, otherwise we return the already existent app
+
     static TravelAgency *
     create(const vector<Destination *> &_destinations, const MountainDiscount &md, const IslandDiscount &id,
            const PercentileDiscount &pd) {
@@ -389,21 +388,10 @@ public:
         }
     }
 
+/// Here is the form of the constructors before implementing the singleton class
+
 public:
-//    TravelAgency(const vector<Destination *> &_destinations, const MountainDiscount &md, const IslandDiscount &id,
-//                 const PercentileDiscount &pd) : md(md), id(id), pd(pd) {
-//        for (auto *destination: _destinations) {
-//            destinations.push_back(allocate(destination));
-//            if (pd.getProcentReducere() > 50) { throw 1; }
-//        }
-//    }
-//
-//
-//    TravelAgency(const vector<Destination *> &_destinations) {
-//        for (auto *destination: _destinations) {
-//            destinations.push_back(allocate(destination));
-//        }
-//    }
+
     map<Destination *, int> mapare() {
 
         map < Destination * , int > tip;
@@ -445,16 +433,16 @@ public:
 ///    iar cea de-a doua va retine pentru fiecare recenzie in parte destinatia din care aceasta face parte.
 ///    Aveti grija ca daca implementati aceasta functie, veti castiga pana la +2.5p bonus complex.
 
-//    map<Destination*, vector<Recenzie*> > reviews(){
-//        map <Destination*, vector<Recenzie*> > rev;
+//    map<Destination*, vector<Review*> > reviews(){
+//        map <Destination*, vector<Review*> > rev;
 //    }
 //
 //
-//    map<Recenzie*, Destination*> reviewsDestination(){
-//        map<Recenzie*, Destination*> rev2;
-//        vector <Recenzie> recenzii;
-//        adaugaRecenziiRandom(recenzii);
-//        for (auto recenzie : recenzii){
+//    map<Review*, Destination*> reviewsDestination(){
+//        map<Review*, Destination*> rev2;
+//        vector <Review> reviews;
+//        adaugaRecenziiRandom(reviews);
+//        for (auto recenzie : reviews){
 //        for(auto* destination : destinations){
 //            for (auto recenzie : destination->getRecenzii())
 //                rev2[recenzie].push_back(*destination);
@@ -490,11 +478,11 @@ public:
         cin >> pd;
     }
 
-    float pretRedus(Destination *destination) {
-        float pret1 = pd.valoareDupaReducere(*destination);
-        float pret2 = id.valoareDupaReducere(*destination);
-        float pret3 = md.valoareDupaReducere(*destination);
-        // returnam minimul:
+    float reducedPrice(Destination *destination) {
+        float pret1 = pd.discountedValue(*destination);
+        float pret2 = id.discountedValue(*destination);
+        float pret3 = md.discountedValue(*destination);
+        /// return the minimum
         return min(pret1, min(pret2, pret3));
     }
 
@@ -504,26 +492,15 @@ public:
             cout << "Denumirea destinatiei: " << destination->getDenumire() << " , ";
             cout << "Orasul: " << destination->getOras() << " , ";
             cout << "Tara: " << destination->getTara() << " , ";
-            cout << "Numarul de reviewuri: " << destination->nrRecenzii() << " , ";
-            cout << "Media recenziilor: " << destination->media() << " , ";
-            cout << "Pretul dupa discount: " << pretRedus(destination);
-//            if (dynamic_cast<MountainTourism *>(destination)) {
-//                if (md.valoareDupaReducere(*destination) < pd.valoareDupaReducere(*destination))
-//                    cout << md.valoareDupaReducere(*destination) << endl;
-//                else
-//                    cout << pd.valoareDupaReducere(*destination) << endl;
-//            }
-//            if (dynamic_cast<IslandTourism *>(destination)) {
-//                if (id.valoareDupaReducere(*destination) < pd.valoareDupaReducere(*destination))
-//                    cout << id.valoareDupaReducere(*destination) << endl;
-//                else
-//                    cout << pd.valoareDupaReducere(*destination) << endl;
-//            }
+            cout << "Numarul de reviewuri: " << destination->reviewNumber() << " , ";
+            cout << "Media recenziilor: " << destination->average() << " , ";
+            cout << "Pretul dupa discount: " << reducedPrice(destination);
+
             cout << "}" << endl;
         }
     }
 
-    void afisDestinatii() {
+    void printDestinations() {
         for (auto *destination: destinations) {
             cout << *destination << " , ";
         }
@@ -531,11 +508,11 @@ public:
     }
 
     void showMenu() {
-        cout << "1. Adauga destinatii " << endl;
-        cout << "2. Sterge destinatii " << endl;
-        cout << "3. Afiseaza Destinatii" << endl;
-        cout << "4. Cerinta 4 " << endl;
-        cout << "5. Schimba Discounturile" << endl;
+        cout << "1. Add destinations " << endl;
+        cout << "2. Delete destinations " << endl;
+        cout << "3. Show Destinations" << endl;
+        cout << "4. Task 4 " << endl;
+        cout << "5. Change the discounts" << endl;
         cout << "6. Exit" << endl;
     }
 
@@ -543,7 +520,7 @@ public:
         int option;
         while (true) {
             showMenu();
-            cout << "Optiune: ";
+            cout << "Option: ";
             cin >> option;
 
             if (option == 1) {
@@ -551,7 +528,7 @@ public:
             } else if (option == 2) {
                 deleteDestination();
             } else if (option == 3) {
-                afisDestinatii();
+                printDestinations();
             } else if (option == 4) {
                 print();
             } else if (option == 5) {
@@ -563,21 +540,22 @@ public:
     }
 };
 
-// TODO 3  initializam cu null var. statica
+/// We initialize the static variable with nullptr
+
 TravelAgency *TravelAgency::app = nullptr;
 
 int main() {
-    vector<Recenzie>  r = {{"Marian", 5, 8.5},
-                          {"Ion",    2, 7}};
-    vector <Recenzie> r1,r2,r3,r4;
-    cout <<"adaugaRecenzii1: ";
-    adaugaRecenzii(r1);
-    cout <<"adaugaRecenzii2: ";
-    adaugaRecenzii(r2);
-    cout <<"adaugaRecenzii3: ";
-    adaugaRecenzii(r3);
-    cout <<"adaugaRecenzii" << endl;
-    adaugaRecenzii(r4);
+    vector<Review>  r = {{"Marian", 5, 8.5},
+                         {"Ion",    2, 7}};
+    vector <Review> r1,r2,r3,r4;
+    cout <<"addReviews1: ";
+    addReviews(r1);
+    cout <<"addReviews2: ";
+    addReviews(r2);
+    cout <<"addReviews3: ";
+    addReviews(r3);
+    cout <<"addReviews4:" << endl;
+    addReviews(r4);
     for(auto i : r1){cout << i<< " , " << endl;}
     for(auto i : r2){cout << i << " , " << endl;}
     for(auto i : r3){cout << i << " , " << endl;}
@@ -591,8 +569,6 @@ int main() {
     };
 
     try {
-//        TravelAgency t(v,300,500,5);
-//        t.run();
         TravelAgency *app = TravelAgency::create(v, 300, 500, 5);
         app->run();
 //        for(const auto& elem : app->mapare())
