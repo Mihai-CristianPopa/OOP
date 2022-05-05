@@ -1,3 +1,5 @@
 # Travel-Agency
-OOP project from University which manages three types of discounts depending on the destination type.
-Also it includes a menu.
+OOP project from University
+
+It manages three types of discounts depending on the destination type.
+It also includes an interactive menu.
